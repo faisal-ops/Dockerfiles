@@ -1,0 +1,25 @@
+version: '3'
+services:
+
+  jenkins:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        USER: test_admin # Change this username as per your choice
+        PASS: test_password # Change this password as per your choice
+    container_name: jenkins
+    restart: always
+    networks: 
+      - automation
+    ports:
+      - '8080:8080'
+      - '8443:8443'
+      - '50000:50000'
+    volumes:
+      - './jenkins_data:/var/jenkins_home'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+
+networks: 
+  automation:
+    driver: bridge
